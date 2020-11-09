@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container mt-4">
+            <h2>Products</h2>
+            
+            <div class="product-wrapper">
+                {% for prod in products %}
+                    <div class= "product-item text-center border p-3">
+                        <a href="{{path('product_detail', {'slug': prod.slug})}}">
+                            <img src="{{asset('uploads/' ~ prod.picture)}}" alt="" class="img-fluid m-auto" width="300">
+                            <hr>
+                            <h4 class="">{{prod.name|title}} </h4>
+                            <h5 class="text-muted">{{prod.subtitle}}</h5>
+                            <p class="">{{prod.description}}.</p>
+                            <p class="badge badge-warning p-3">
+                                <i class="fa fa-tag"></i> {{ (prod.price / 100)|number_format(2)}}€</p>
+                        </a>
+                </div>
+                {% endfor %}
+            </div>
+
+    </div>
+    {% endblock %}
+
+{% endblock %}

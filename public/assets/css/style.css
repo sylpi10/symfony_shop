@@ -3,3 +3,34 @@ footer{
     bottom: 0;
     width: 100%;
 }
+
+.product-wrapper{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin:30px auto;
+}
+.product-item{
+    width: 28%;
+    min-width: 300px;
+    margin-top: 30px;
+    transition: all .6s ease;
+}
+.product-item:hover{
+    text-decoration: none;
+    box-shadow: 4px 4px 3px #eee, -4px -4px 3px #eee;
+}
+
+.product-detail-page{
+    background-color: #eee;
+    padding: 40px;  
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.product-detail-page .details{
+    width: 40%;
+    margin-left:80px;
+    min-width: 300px;
+}
