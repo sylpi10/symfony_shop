@@ -28,7 +28,7 @@ class RegisterController extends AbstractController
             $manager->persist($user);
             $manager->flush();
             $this->addFlash("success", "Your are registered and you can login now");
-            return $this->redirectToRoute('register');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('register/register.html.twig', [
