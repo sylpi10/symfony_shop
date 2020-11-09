@@ -11,8 +11,8 @@ footer{
     margin:30px auto;
 }
 .product-item{
-    width: 28%;
-    min-width: 300px;
+    width: 22%;
+    min-width: 260px;
     margin-top: 30px;
     transition: all .6s ease;
 }
