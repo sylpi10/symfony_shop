@@ -40,8 +40,11 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            
+                    <a class="nav-link" href="{{path('home')}}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{path('register')}}">Register <span class="sr-only">(current)</span></a>
+                </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
@@ -52,6 +55,8 @@
 </header>
 
 <main role="main">
+
+    {% if block('carousel') is defined %}
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -100,7 +105,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-
+    {% endif %}
    {% block content %}{% endblock %}
 
     <!-- FOOTER -->
