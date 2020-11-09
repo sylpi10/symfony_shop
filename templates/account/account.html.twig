@@ -8,12 +8,20 @@
         <div class="container mt-5">
             <h1>Welcome {{app.user.nickname}} !</h1>
 
+            {% for message in app.flashes('success') %}
+            <div class="flash-notice alert alert-success w-50">
+                {{ message }}
+            </div>
+            {% endfor %}
+
             <ul>
+                <li><a href="{{path('account_password')}}">Change my infos</a></li>
+
                 <li><h3> To do : </h3></li>
-                <li>Update pw</li>
                 <li>Add addresses</li>
                 <li>my comments</li>
             </ul>
+            <hr>
         </div>
     {% endblock %}
 
