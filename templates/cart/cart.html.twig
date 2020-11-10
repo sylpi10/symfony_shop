@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}cart{% endblock %}
+
+{% block body %}
+
+    {% block content %}
+        <div class="container mt-5">
+            <h1> <i class="fas fa-shopping-cart"></i>  my cart </h1>
+            <hr>
+
+            {% if cart|length > 0 %}
+            <table class="table table-striped">
+                <thead class="thead-dark bg-dark text-white">
+                    <tr class="text-center">
+                        <td scope="col"></td>
+                        <td scope="col">Product</td>
+                        <td scope="col">Quantity</td>
+                        <td scope="col">Price</td>
+                        <td scope="col">Total</td>
+                        <td scope="col"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prod in fullCart %}
+                    <tr class="text-center">
+                        <th><img src="{{asset('uploads/' ~ prod.product.picture)}}" alt="" width="120"></th>
+                        <th class="align-middle">{{prod.product.name}}</th>
+                        <th class="align-middle">
+                            <a href="{{path('delete_one', {'id' : prod.product.id})}}"<i class="fa fa-minus bg-warning p-1 mr-2 text-white"></i></a>
+                            {{prod.quantity}}
+                            <a href="{{path('add_to_cart', {'id' : prod.product.id})}}"><i class="fa fa-plus bg-success p-1 ml-2 text-white"></i></a>
+                        </th>
+                        <th class="align-middle">{{(prod.product.price / 100)|number_format(2)}}€</th>
+                        <th class="align-middle">{{((prod.product.price * prod.quantity) / 100)|number_format(2)}}€</th>
+                        <th class="align-middle">
+                            <a href="{{path('delete', {'id' : prod.product.id})}}">
+                                <i class="fa fa-trash text-danger"></i></th>
+                            </a>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr class="bg-dark text-white text-center">
+                        <th colspan="4" >Total : <th>{{(totalPrice/ 100)|number_format(2)}} €</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="d-flex justify-content-around mt-4">
+                <a href="{{path('product')}}" class="btn btn-info">Back to Shop</a>
+                <a href="" class="btn btn-success"> <i class="fa fa-check"></i> Validate Cart</a>
+            </div>
+            {% else %}
+            <h2>The cart is empty </h2>
+            <a href="{{path('product')}}" class="btn btn-info mt-4">Start Shopping</a>
+            {% endif %}
+
+        </div>
+    {% endblock %}
+
+{% endblock %}

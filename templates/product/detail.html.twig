@@ -5,7 +5,7 @@
 {% block body %}
     {% block content %}
         <div class="container mt-4">
-            <h2>Products details</h2>
+            <h2>Product details</h2>
             
             <div class="product-detail-page">
                 <img src="{{asset('uploads/' ~ product.picture)}}" alt="" class="img-fluid m-auto" width="420">
@@ -14,7 +14,7 @@
                     <h2> <p class="badge badge-warning p-3">
                         <i class="fa fa-tag"></i> {{ (product.price / 100)|number_format(2)}}€</p></h2>
                     <p>{{product.description}}</p>
-                    <button class="btn btn-success mt-5">Add to cart</button>
+                    <a href="{{path('add_to_cart', {id: product.id})}}"  class="btn btn-success mt-5">Add to cart</a>
                 </div>
             </div>
 
