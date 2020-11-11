@@ -6,6 +6,7 @@ use App\Entity\Address;
 use App\Form\AddressType;
 use App\Services\AddressesService;
 use App\Repository\AddressRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +18,10 @@ class AccountAddressController extends AbstractController
     /**
      * @Route("/account/address", name="account_address")
      */
-    public function index(AddressRepository $addressRepo): Response
+    public function index(): Response
     {   
-        
-        $addresses = $addressRepo->findall();
+        // get all addresses from the user
+        $addresses = $this->getUser()->getAddresses();
         return $this->render('account/address.html.twig', [
             
             'addresses' => $addresses
