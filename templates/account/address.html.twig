@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Account{% endblock %}
+
+{% block body %}
+
+    {% block content %}
+        <div class="container mt-5">
+            <a href="{{path('add_address')}}" class="btn btn-info float-right">Add An Address</a>
+            <h1>address!</h1>
+
+            {% for message in app.flashes('success') %}
+            <div class="flash-notice alert alert-success w-50">
+                {{ message }}
+            </div>
+            {% endfor %}
+           <hr>
+           {% if app.user.addresses|length  < 1 %}
+            <h3>No address registered yet !!</h3>
+            {% else %}
+
+            <!-- // display addresses -->
+                {% for address in addresses %}
+                    <div class="shadow row p-4 m-3">
+                        <div class="col-md-8">
+
+                            <h3>{{address.name}}:</h3>
+                            <hr>
+                            <h4>M, Ms : {{address.firstname|title}} {{address.lastname|title}} </h4>
+                            <h5> {% if address.company %}
+                                {{address.company}}
+                                {% endif %} </h5>
+                                <h5>{{address.address}} </h5>
+                                <h5>{{address.postalCode}}, {{address.city}}</h5>   
+                                {% if address.phone %}
+                                <h6>{{address.phone}}</h6>
+                                {% endif %}
+                            </div>
+                            <div class="actions col-md-4">
+                                <a href="{{path('edit_address', {'id' : address.id})}}">
+                                    <i class="fa fa-edit bg-info p-2 text-white"></i>
+                                </a>
+                                <a href="{{path('delete_address', {'id': address.id})}}">
+                                    <i class="fa fa-trash bg-danger p-2 text-white"></i>
+                                </a>
+                            </div>
+                        </div>
+                {% endfor %}
+           {% endif %}
+
+           <a href="{{path('account')}}">Back to account</a>
+        </div>
+
+
+  </div>
+
+    {% endblock %}
+
+{% endblock %}
