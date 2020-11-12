@@ -14,11 +14,30 @@
                     {{form(form)}}
                     {% endset %}
                     {{formHtml|replace({'[br]': '</br>'})|raw}}
-                    <b>Choose Carrier</b>
                 </div>
-                <div class="col-md-6">
-                    <b>Order details</b> <br>
-                    <a href="" class="btn btn-success">Validate</a>
+                
+                <div class="text-center col-md-6 shadow p-3">
+                    <b>Order details</b>
+                    <hr>
+                    {% for prod in fullCart %}
+                        <div class="d-flex justify-content-between align-items-center p-3 m-2">
+                                    <div class="row align-items-center">
+                                        <img src="{{asset('uploads/' ~ prod.product.picture)}}" alt="" width="76">
+                                        <p class="ml-2">
+                                            {{prod.product.name}} ({{(prod.product.price / 100)|number_format(2)}}€)
+                                        </p>
+                                    </div>
+                                    <div class="">
+
+                                        <p class="align-items-end">
+                                            x {{prod.quantity}} 
+                                        </p>
+                                        <p class="align-middle">{{((prod.product.price * prod.quantity) / 100)|number_format(2)}}€</p>
+                                    </div>    
+                        </div>  
+                        <hr>
+                            {% endfor %}
+                            <b class="float-right mr-3">Total : {{(total / 100)|number_format(2)}} €</b>
                 </div>
 
             </div>
