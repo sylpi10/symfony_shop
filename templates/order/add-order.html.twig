@@ -5,19 +5,21 @@
 {% block body %}
     {% block content %}
         <div class="container mt-5">
-            <h1>Orders</h1>
+            <h1>Orders Recap</h1>
             <hr>
-
             <div class="row">
-                <div class="col-md-6">
-                    {% set formHtml %}
-                    {{form_start(form, {action:path('order_recap')})}}
-                        {{form_label(form.address, 'Pick delivery Address')}}
-                            <a href="{{path('add_address')}}">Add a new address</a>
-                        {{form_widget(form)}}
-                    {{form_end(form)}}
-                    {% endset %}
-                    {{formHtml|replace({'[br]': '</br>'})|raw}}
+                <div class="col-6">
+
+                    <div class="form-check">
+                        <h3>Delivery Address</h3>
+                        {{delivery|title|raw}}
+                    </div>
+                    <div class="form-check">
+                        <h3>Carrier</h3>
+                        <p>{{carrier.name}}</p>
+                        <p>{{carrier.description}}</p>
+                        <p>{{carrier.price|number_format(2)}} €</p>
+                    </div>
                 </div>
                 
                 <div class="text-center col-md-6 shadow p-3">
@@ -36,15 +38,22 @@
                                         <p class="align-items-end">
                                             x {{prod.quantity}} 
                                         </p>
-                                        {# <p class="align-middle">{{((prod.product.price * prod.quantity) / 100)|number_format(2)}}€</p> #}
+                                        <p class="align-middle">{{((prod.product.price * prod.quantity) / 100)|number_format(2)}}€</p>
                                     </div>    
                         </div>  
                         <hr>
-                            {% endfor %}
-                            {# <b class="float-right mr-3">Total : {{(total / 100)|number_format(2)}} €</b> #}
+                        {% endfor %}
+                        <p>
+                            <b class="">Products Total : {{(total / 100)|number_format(2)}} €</b>
+                        </p>
+                        <p>
+                            <b>Delivery : {{carrier.price|number_format(2)}} €</b>
+                        </p>
+                        <p>
+                            <b class="bg-dark text-white py-2 px-5">Total : {{((total / 100) + carrier.price)|number_format(2)}} € </b>
+                        </p>
+                        <a href="" class="btn btn-success btn-block">Pay {{((total / 100) + carrier.price)|number_format(2)}} € </a>
+                    </div>
                 </div>
-
-            </div>
-        </div>
     {% endblock %}
 {% endblock %}
