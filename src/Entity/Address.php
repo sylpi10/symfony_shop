@@ -195,6 +195,6 @@ class Address
 
     public function __tostring()
     {
-        return $this->name;
+        return $this->getName(). '[br]'.$this->getAddress().'[br]'.$this->getPostalCode().'-'.$this->getCity().'[br]'.$this->getCountry();
     }
 }

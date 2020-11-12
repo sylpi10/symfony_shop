@@ -13,7 +13,11 @@ class OrderController extends AbstractController
      * @Route("/order", name="order")
      */
     public function index(): Response
+
     {
+        if (!$this->getUser()->getAddresses()->getValues()) {
+            return $this->redirectToRoute('add_address');
+        }
         $form = $this->createForm(OrderType::class, null, [
             'user' => $this->getUser()
         ]);

@@ -20,12 +20,16 @@ class AddressType extends AbstractType
             ])
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
-            ->add('company', TextType::class)
+            ->add('company', TextType::class, [
+                'required' => false
+            ])
             ->add('address', TextType::class)
             ->add('postalCode', TextType::class)
             ->add('city', TextType::class)
             ->add('country', CountryType::class)
-            ->add('phone', TelType::class)
+            ->add('phone', TelType::class, [
+                'required' => false
+            ])
         ;
     }
 

@@ -7,6 +7,7 @@ use App\Form\AddressType;
 use App\Services\AddressesService;
 use App\Repository\AddressRepository;
 use App\Repository\UserRepository;
+use App\Services\CartService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +32,7 @@ class AccountAddressController extends AbstractController
     /**
      * @Route("/account/add_address", name="add_address")
      */
-    public function add(Request $request, EntityManagerInterface $manager)
+    public function add(Request $request, EntityManagerInterface $manager, CartService $cartService)
     {
         $user = $this->getUser();
         $address = new Address();
@@ -43,6 +44,9 @@ class AccountAddressController extends AbstractController
             $address->setUser($user);
             $manager->persist($address);
             $manager->flush();
+            if ($cartService->get()) {
+                return $this->redirectToRoute('order');
+            }
             $this->addFlash("success", "This Address have been created");
             return $this->redirectToRoute('account_address');
         }
