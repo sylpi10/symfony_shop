@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use App\Services\CartService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -166,6 +167,15 @@ class Order
         $this->isPaid = $isPaid;
 
         return $this;
+    }
+
+    public function getTotal()
+    {
+        $total = 0;
+        foreach ($this->getOrderDetails()->getValues() as $product) {
+            $total = $product->getPrice() * $product->getQuantity();
+        }
+        return $total;
     }
 
     public function __tostring()

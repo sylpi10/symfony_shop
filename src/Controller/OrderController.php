@@ -55,7 +55,7 @@ class OrderController extends AbstractController
             $delivery = $form->get('address')->getData();
             $delivery_content = $delivery->getFirstName().' '.$delivery->getLastName();
             if ( $delivery->getCompany()) {
-                $delivery_content .= $delivery->getCompany();
+                $delivery_content .='</br>'. $delivery->getCompany();
             }
             $delivery_content .= '</br>'.$delivery->getAddress();
             $delivery_content .= '</br>'.$delivery->getPostalCode().' '.$delivery->getCity();
@@ -79,9 +79,9 @@ class OrderController extends AbstractController
                 $manager->persist($orderDetails);
                 // dd($product);
             }
-            // $manager->flush();
+            $manager->flush();
 
-            return $this->render('order/add-order.html.twig', [
+            return $this->render('order/order-recap.html.twig', [
                 'form' => $form->createView(),
                 'fullCart' => $cartService->getFullCart(),
                 'total' => $cartService->getTotal(),
