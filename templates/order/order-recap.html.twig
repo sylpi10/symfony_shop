@@ -69,14 +69,18 @@
     var stripe = Stripe("pk_test_51HnUYOKpJz9wyF2l2yjsVWZay2iej3D5wzyNalazkiuw8ZFWsMSX35FG222TSbFaI9lP1CkdQAh2iUIxSTZhM4U200duXWCGaT");
     var checkoutButton = document.getElementById("checkout-button");
     checkoutButton.addEventListener("click", function () {
-        fetch("/order/create-session", {
+        fetch("/order/create-session/{{ reference }}", {
             method: "POST",
         })
         .then(function (response) {
             return response.json();
         })
         .then(function (session) {
-            return stripe.redirectToCheckout({ sessionId: session.id });
+            if (session.error == 'order') {
+                window.location.replace("{{ path('order') }}");
+            }else{
+                return stripe.redirectToCheckout({ sessionId: session.id });
+            }
         })
         .then(function (result) {
         // If redirectToCheckout fails due to a browser or network

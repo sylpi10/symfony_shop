@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Order;
 use App\Form\OrderType;
 use App\Entity\OrderDetails;
@@ -50,10 +51,10 @@ class OrderController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $order = new Order();
             $carrier = $form->get('carrier')->getData();
             $delivery = $form->get('address')->getData();
             $delivery_content = $delivery->getFirstName().' '.$delivery->getLastName();
+
             if ( $delivery->getCompany()) {
                 $delivery_content .='</br>'. $delivery->getCompany();
             }
@@ -62,13 +63,16 @@ class OrderController extends AbstractController
             $delivery_content .= '</br>'.$delivery->getCountry();
             // dd($delivery_content);
 
+            $order = new Order();
+            $date = new DateTime();
+            $reference =  $date->format('dmY').'-'.uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
-            $order->setCreatedAt(new \DateTime());
+            $order->setCreatedAt($date);
             $order->setCarrierName($carrier->getName());
             $order->setCarrierPrice($carrier->getPrice());
             $order->setDelivery($delivery_content);
             $order->setIsPaid(false);
-
           
             // save products in orderdetails
             foreach ($cartService->getFullCart() as $product) {
@@ -82,7 +86,7 @@ class OrderController extends AbstractController
 
                 // dd($product);
             }
-            // $manager->flush();
+            $manager->flush();
 
             // dump($checkout_session->id);
             // dd($checkout_session);
@@ -93,7 +97,7 @@ class OrderController extends AbstractController
                 'total' => $cartService->getTotal(),
                 'carrier' => $carrier,
                 'delivery' =>$delivery_content,
-                
+                'reference' => $order->getReference()
             ]);
         }
 
