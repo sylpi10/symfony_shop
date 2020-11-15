@@ -3,14 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Order;
-use App\Entity\OrderDetails;
 use App\Form\OrderType;
+use App\Entity\OrderDetails;
 use App\Services\CartService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class OrderController extends AbstractController
 {
@@ -36,7 +36,7 @@ class OrderController extends AbstractController
     }
 
     /**
-     * @Route("/order/recap", name="order_recap", methods={"POST"})
+     * @Route("/order/recap", name="order_recap", methods={"POST", "GET"})
      */
     public function addOrder(CartService $cartService, Request $request, EntityManagerInterface $manager): Response
 
@@ -69,6 +69,8 @@ class OrderController extends AbstractController
             $order->setDelivery($delivery_content);
             $order->setIsPaid(false);
 
+          
+            // save products in orderdetails
             foreach ($cartService->getFullCart() as $product) {
                 $orderDetails = new OrderDetails();
                 $orderDetails->setMyorder($order);
@@ -77,16 +79,21 @@ class OrderController extends AbstractController
                 $orderDetails->setPrice($product['product']->getPrice());
                 $orderDetails->setTotal($product['product']->getPrice() * $product['quantity']);
                 $manager->persist($orderDetails);
+
                 // dd($product);
             }
-            $manager->flush();
+            // $manager->flush();
+
+            // dump($checkout_session->id);
+            // dd($checkout_session);
 
             return $this->render('order/order-recap.html.twig', [
                 'form' => $form->createView(),
                 'fullCart' => $cartService->getFullCart(),
                 'total' => $cartService->getTotal(),
                 'carrier' => $carrier,
-                'delivery' =>$delivery_content
+                'delivery' =>$delivery_content,
+                
             ]);
         }
 
