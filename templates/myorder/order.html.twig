@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Validate Order{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="container mt-5">
+            <h1>Orders</h1>
+            <hr>
+
+            <div class="row">
+                <div class="col-md-6">
+                    {% set formHtml %}
+                    {{form_start(form, {action:path('order_recap')})}}
+                        {{form_label(form.address, 'Pick delivery Address')}}
+                            <a href="{{path('add_address')}}">Add a new address</a>
+                        {{form_widget(form)}}
+                    {{form_end(form)}}
+                    {% endset %}
+                    {{formHtml|replace({'[br]': '</br>'})|raw}}
+                </div>
+                
+                <div class="text-center col-md-6 shadow p-3">
+                    <b>Order details</b>
+                    <hr>
+                    {% for prod in fullCart %}
+                        <div class="d-flex justify-content-between align-items-center p-3 m-2">
+                                    <div class="row align-items-center">
+                                        <img src="{{asset('uploads/' ~ prod.product.picture)}}" alt="" width="76">
+                                        <p class="ml-2">
+                                            {{prod.product.name}} ({{(prod.product.price / 100)|number_format(2)}}€)
+                                        </p>
+                                    </div>
+                                    <div class="">
+
+                                        <p class="align-items-end">
+                                            x {{prod.quantity}} 
+                                        </p>
+                                        {# <p class="align-middle">{{((prod.product.price * prod.quantity) / 100)|number_format(2)}}€</p> #}
+                                    </div>    
+                        </div>  
+                        <hr>
+                            {% endfor %}
+                            {# <b class="float-right mr-3">Total : {{(total / 100)|number_format(2)}} €</b> #}
+                </div>
+
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
