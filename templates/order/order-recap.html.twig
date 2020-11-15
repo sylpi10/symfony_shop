@@ -50,12 +50,12 @@
                             <b class="">Products Total : {{(total / 100)|number_format(2)}} €</b>
                         </p>
                         <p>
-                            <b>Delivery : {{carrier.price|number_format(2)}} €</b>
+                            <b>Delivery : {{ (carrier.price / 100)|number_format(2)}} €</b>
                         </p>
                         <p>
-                            <b class="bg-dark text-white py-2 px-5">Total : {{((total / 100) + carrier.price)|number_format(2)}} € </b>
+                            <b class="bg-dark text-white py-2 px-5">Total : {{((total / 100) + (carrier.price / 100))|number_format(2)}} € </b>
                         </p>
-                        <a id="checkout-button" class="btn btn-success btn-block">Pay {{((total / 100) + carrier.price)|number_format(2)}} € </a>
+                        <a id="checkout-button" class="btn btn-success btn-block">Pay {{((total / 100) + (carrier.price / 100))|number_format(2)}} € </a>
                     </div>
                 </div>
     {% endblock %}
