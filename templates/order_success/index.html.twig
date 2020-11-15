@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Success{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 pt-5">
+        <h2> <i class="fa fa-check text-success"></i> Thank you for your purchase {{order.user.nickName}}</h2>
+        <hr>
+        <p>A mail was send to you at {{order.user.email}}</p>
+        <hr>
+        <p>Order delivered by {{order.carrierName}} To :</p>
+        <p>{{order.delivery|raw}}</p>
+        <hr>
+        To follow your order:   <a href="{{path('account')}}">My Account</a>
+    </div>
+{% endblock %}

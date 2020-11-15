@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment error{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 pt-5">
+        <h2> <i class="fa fa-times text-danger"></i> {{order.user.nickName}}, Your order has been unsuccessful</h2>
+        <hr>
+        <p>A mail was send to you at {{order.user.email}}</p>
+        <hr>
+      
+        <hr>
+        <a href="{{path('order')}}">Try again</a>
+    </div>
+{% endblock %}

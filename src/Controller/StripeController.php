@@ -18,7 +18,7 @@ class StripeController extends AbstractController
     /**
      * @Route("/order/create-session/{reference}", name="stripe_sreate_session")
      */
-    public function index(CartService $cartService, $reference,
+    public function index($reference, EntityManagerInterface $manager,
      ProductRepository $productRepo, OrderRepository $orderRepo): Response
     {
         $order = $orderRepo->findOneByReference($reference);
@@ -68,9 +68,13 @@ class StripeController extends AbstractController
                 $products_for_stripe
             ]],
             'mode' => 'payment',
-            'success_url' => $YOUR_DOMAIN . '/success.html',
-            'cancel_url' => $YOUR_DOMAIN . '/cancel.html',
+            'success_url' => $YOUR_DOMAIN . '/order/thanks/{CHECKOUT_SESSION_ID}',
+            'cancel_url' => $YOUR_DOMAIN . '/order/error/{CHECKOUT_SESSION_ID}',
         ]);
+
+        $order->setStripeSessionId($checkout_session->id);
+
+        $manager->flush();
 
         $response = new JsonResponse(['id' => $checkout_session->id]);
         return $response;
