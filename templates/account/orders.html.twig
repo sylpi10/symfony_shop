@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+        <div class="container mt-5">
+
+            <a href="{{path('add_address')}}" class="btn btn-info float-right">Add An Address</a>
+
+            <h2>my orders!</h2>
+
+            {% for message in app.flashes('success') %}
+            <div class="flash-notice alert alert-success w-50">
+                {{ message }}
+            </div>
+            {% endfor %}
+           <hr>
+           {% if orders|length  < 1 %}
+            <h3>No orders yet!!</h3>
+            {% else %}
+
+            <!-- // display addresses -->
+            <div class="shadow row p-4 m-3">
+                {% for order in orders %}
+                        <div class="col-lg-3 col-md-12 border m-2 p-3">
+
+                            <p><span class="badge badge-info"> {{order.reference}}</span></p>
+                            <h4>{{order.createdAt|date("m/d/Y") }}:</h4>
+                            {# <h4>{{order.delivery|raw}}</h4> #}
+                            <h4>Product nb: {{order.orderDetails|length}}</h4>
+                            <h5 class="badge badge-warning p-2">Price:
+                                 {{((order.getTotal + order.carrierPrice) / 100)|number_format(2)}} €</h5>
+                            <h5><a href="{{path('account_order_details', {'reference' : order.reference})}}">Details</a></h5>
+                           
+                            </div>
+                {% endfor %}
+                        </div>
+           
+           {% endif %}
+
+           <a href="{{path('account')}}">Back to account</a>
+        </div>
+
+
+  </div>
+
+{% endblock %}
+

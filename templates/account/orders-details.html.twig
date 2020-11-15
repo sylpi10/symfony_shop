@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block content %}
+        <div class="container mt-5">
+            <h2>Order Num: <span class="text-info"> {{order.reference}}</span> </h2>
+      
+                <div class="shadow p-5 my-5">
+
+                    <h4>Order Date: {{order.createdAt|date("m/d/Y") }}:</h4>
+                    {# <h4>{{order.delivery|raw}}</h4> #}
+                    <h4 class="mb-4">Carrier: {{order.carrierName}}</h4>
+                
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Unit price</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for prod in order.orderDetails %}
+                            <tr>
+                                <td>{{prod.product}} </td>
+                                <td>{{prod.quantity}}</td>
+                                <td><span class="badge badge-info p-2">{{(prod.price / 100 )|number_format(2)}} €</span></td>
+                                <td><span class="badge badge-warning p-2">{{(prod.total / 100 )|number_format(2)}} €</span></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <hr>
+                
+                <div class="w-50">
+                    <h5>Sub Total:{{(order.getTotal / 100 )|number_format(2)}} € + Delivery: {{(order.carrierPrice / 100 )|number_format(2)}} €</h5>
+                    <h5 class="bg-dark text-white p-2">Total:
+                        {{((order.getTotal + order.carrierPrice) / 100)|number_format(2)}} €</h5>
+                </div>
+
+           <a href="{{path('account')}}">Back to account</a>
+
+        </div>
+        </div>
+
+
+  </div>
+
+{% endblock %}
+

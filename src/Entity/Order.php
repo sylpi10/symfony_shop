@@ -183,7 +183,7 @@ class Order
     {
         $total = 0;
         foreach ($this->getOrderDetails()->getValues() as $product) {
-            $total = $product->getPrice() * $product->getQuantity();
+            $total = $total + $product->getPrice() * $product->getQuantity();
         }
         return $total;
     }

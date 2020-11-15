@@ -21,7 +21,7 @@
                         <h3>Carrier</h3>
                         <p>{{carrier.name}}</p>
                         <p>{{carrier.description}}</p>
-                        <p>{{carrier.price|number_format(2)}} €</p>
+                        <p>{{(carrier.price / 100)|number_format(2)}} €</p>
                     </div>
                 </div>
                 
