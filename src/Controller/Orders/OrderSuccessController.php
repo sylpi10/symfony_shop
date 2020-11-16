@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Orders;
 
 use App\Services\CartService;
 use App\Services\MailService;
@@ -24,10 +24,10 @@ class OrderSuccessController extends AbstractController
             return $this->redirectToRoute('home');
         }
         // set isPaid status to 1
-        if (!$order->getIsPaid()) {
+        if ($order->getState() == 0) {
             // empty cart session
             $cartService->remove();
-            $order->setIsPaid(1);
+            $order->setState(1);
             $manager->flush();
             //send mail to client
 

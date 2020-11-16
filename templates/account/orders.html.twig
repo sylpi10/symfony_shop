@@ -26,11 +26,18 @@
 
                             <p><span class="badge badge-info"> {{order.reference}}</span></p>
                             <h4>{{order.createdAt|date("m/d/Y") }}:</h4>
-                            {# <h4>{{order.delivery|raw}}</h4> #}
-                            <h4>Product nb: {{order.orderDetails|length}}</h4>
+                            {% if order.state == 1 %}
+                                <h4>Paid</h4>
+                            {% elseif order.state == 2 %}
+                                <h4 class="text-primary">On preparation</h4>          
+                            {% elseif order.state == 3 %}
+                                <h4 class="text-success">On Delevery</h4>
+                            {% endif %}
                             <h5 class="badge badge-warning p-2">Price:
                                  {{((order.getTotal + order.carrierPrice) / 100)|number_format(2)}} €</h5>
-                            <h5><a href="{{path('account_order_details', {'reference' : order.reference})}}">Details</a></h5>
+                                 <hr>
+                            <h5><a href="{{path('account_order_details', {'reference' : order.reference})}}">
+                                <i class="fas fa-plus"></i> Details</a></h5>
                            
                             </div>
                 {% endfor %}

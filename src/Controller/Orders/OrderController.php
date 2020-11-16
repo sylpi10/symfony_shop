@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Orders;
 
 use DateTime;
 use App\Entity\Order;
@@ -72,7 +72,7 @@ class OrderController extends AbstractController
             $order->setCarrierName($carrier->getName());
             $order->setCarrierPrice($carrier->getPrice());
             $order->setDelivery($delivery_content);
-            $order->setIsPaid(false);
+            $order->setState(0);
           
             // save products in orderdetails
             foreach ($cartService->getFullCart() as $product) {

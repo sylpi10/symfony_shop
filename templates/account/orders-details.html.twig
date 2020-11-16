@@ -10,8 +10,17 @@
 
                     <h4>Order Date: {{order.createdAt|date("m/d/Y") }}:</h4>
                     {# <h4>{{order.delivery|raw}}</h4> #}
-                    <h4 class="mb-4">Carrier: {{order.carrierName}}</h4>
-                
+                    <h4>Carrier: {{order.carrierName}}</h4>
+                    <h5> Order's status :
+                        {% if order.state == 1 %}
+                            <span>Paid</span>
+                        {% elseif order.state == 2 %}
+                            <span class="text-primary">On preparation</span>          
+                        {% elseif order.state == 3 %}
+                            <span class="text-success">On Delevery</span>
+                        {% endif %}
+                    </h5>
+                    
                 <table class="table">
                     <thead>
                         <tr>
