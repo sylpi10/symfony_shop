@@ -9,7 +9,11 @@ footer{
     padding: 3px;
     border: solid 1px #333;
 }
-
+.carousel-item>.container-fluid{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(120deg, rgba(0, 0, 0, 0.4), rgba(255,255,255,.3));
+}
 .product-wrapper{
     display: flex;
     justify-content: space-between;

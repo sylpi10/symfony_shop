@@ -2,11 +2,13 @@
 
 namespace App\EventSubscriber;
 
+use ReflectionClass;
+use App\Entity\Slider;
 use App\Entity\Product;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 
 class EasyAdminSubscriber implements EventSubscriberInterface
 {
@@ -25,13 +27,13 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function uploadPic($event)
+    public function uploadPic($event, $entityName)
     {
         $entity = $event->getEntityInstance();
 
-        $tmp_name = $_FILES['Product']['tmp_name']['picture'];
+        $tmp_name = $_FILES[$entityName]['tmp_name']['picture'];
         $filename = uniqid();
-        $extension = pathinfo($_FILES['Product']['name']['picture'], PATHINFO_EXTENSION);
+        $extension = pathinfo($_FILES[$entityName]['name']['picture'], PATHINFO_EXTENSION);
 
         $project_dir = $this->appKernel->getProjectDir();
 
@@ -42,22 +44,29 @@ class EasyAdminSubscriber implements EventSubscriberInterface
 
     public function updatePicture(BeforeEntityUpdatedEvent $event)
     {
-        if (!$event ->getEntityInstance() instanceof Product) {
+        if (!($event ->getEntityInstance() instanceof Product) && !($event ->getEntityInstance() instanceof Slider)) {
             return;
         }
 
-        if ($_FILES['Product']['tmp_name']['picture'] != '') {
-            $this->uploadPic($event);
+        $reflexion = new \ReflectionClass($event ->getEntityInstance());
+        $entityName = $reflexion->getShortName();
+
+        if ($_FILES[$entityName]['tmp_name']['picture'] != '') {
+            $this->uploadPic($event, $entityName);
         }
     }
 
     public function setPicture(BeforeEntityPersistedEvent $event)
     {
-        if (!$event ->getEntityInstance() instanceof Product) {
+
+        $reflexion = new \ReflectionClass($event ->getEntityInstance());
+        $entityName = $reflexion->getShortName();
+
+        if (!($event ->getEntityInstance() instanceof Product) && !($event ->getEntityInstance() instanceof Slider)) {
             return;
         }
         
-       $this->uploadPic($event);
+       $this->uploadPic($event, $entityName);
     }
 
 }
