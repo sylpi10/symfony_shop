@@ -14,10 +14,9 @@ class GlobalController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(ProductRepository $repo, SessionInterface $session): Response
+    public function index(ProductRepository $repo, SessionInterface $session, $isBest = 1): Response
     {
-
-        $products = $repo->findAll();
+        $products = $repo->findByIsBest($isBest);
         return $this->render('global/index.html.twig', [
           'products' => $products
         ]);
