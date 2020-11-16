@@ -9,6 +9,13 @@
         <h1>Register</h1>
         <hr>
 
+
+    {% for message in app.flashes('success') %}
+    <div class="flash-notice alert alert-success w-50">
+        {{ message }}
+    </div>
+    {% endfor %}
+
         <div class="w-50 m-auto mb-5">
 
             {{form_start(form)}}

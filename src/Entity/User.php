@@ -12,8 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity("email",
- *  message="This email is already used"
+ * @UniqueEntity("email"
  * )
  */
 class User implements UserInterface
@@ -51,12 +50,12 @@ class User implements UserInterface
     private $nickname;
 
     /**
-     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Address::class, mappedBy="user", cascade={"remove"})
      */
     private $addresses;
 
     /**
-     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user", cascade={"remove"})
      */
     private $orders;
 
