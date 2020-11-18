@@ -17,21 +17,13 @@
     </div>
     {% endfor %}
     
-    <form method="post" class="w-50 m-auto">
-    {# {% if error %}
-    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %} #}
     
-    
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Reset PW</h1>
     <hr>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="" name="email" id="inputEmail" class="form-control" required autofocus>
-
-        <button class="btn btn-lg btn-primary mt-4" type="submit">
-            New pw
-        </button>
-    </form>
+        {{form_start(form)}}
+            {{form_widget(form)}}
+            <input type="submit" value="Reset" class="btn btn-success">
+        {{form_end(form)}}
     <hr>
     <p class="text-center">Or <a href="{{path('app_login')}}">Log in</a></p>
 </div>
