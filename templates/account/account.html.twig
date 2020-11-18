@@ -15,6 +15,11 @@
             {% endfor %}
 
             <ul>
+                {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a class="nav-link text-info" href='/admin'> Admin Dashboard</a>
+                </li>
+                {% endif %}
                 <li><a href="{{path('account_password')}}">Change my infos</a></li>
                 <li><a href="{{path('account_address')}}">Change my addresses</a></li>
                 <li><a href="{{path('account_orders')}}">My orders</a></li>
